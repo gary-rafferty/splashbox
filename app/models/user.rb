@@ -13,12 +13,11 @@ class User < ActiveRecord::Base
                   :waitlist
 
   scope :admin,     -> { where(dropbox_uid: ENV['DROPBOX_ADMIN_ID']).first }
-  scope :consumers, -> { where(waitlist: false).all }
-  scope :waiting,   -> { where(waitlist: true).all }
+  scope :consumers, -> { where(waitlist: false) }
+  scope :waiting,   -> { where(waitlist: true) }
 
   def activate
-    self.waitlist = false
-    save
+    update_attributes(waitlist: false)
   end
 
   private
